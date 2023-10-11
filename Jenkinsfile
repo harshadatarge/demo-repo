@@ -9,8 +9,8 @@ pipeline {
         }
         stage('Git clone') {
             steps {
-                'git clone https://github.com/wakaleo/game-of-life'
-                    }
+                git url: 'https://github.com/wakaleo/game-of-life'
+            }
         }
     }
 }
