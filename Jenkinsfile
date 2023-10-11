@@ -9,7 +9,7 @@ pipeline {
         }
         stage('Git clone') {
             steps {
-                git credentialsId: 'harshadatarge', url: 'https://github.com/wakaleo/game-of-life'
+                git clone url: 'https://github.com/wakaleo/game-of-life'
             }
         }
     }
