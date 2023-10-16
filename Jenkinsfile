@@ -1,16 +1,35 @@
 pipeline {
-    agent any
+   agent {
+    node {
+        label 'built-in'
+        customWorkspace '/home/ec2-user'
+    }
+}
 
     stages {
-        stage('Hello') {
+        stage('checkout') {
             steps {
-                echo 'Hello World'
+		sh '''
+            git clone https://github.com/shantanuvaidya27/game-of-life.git
+	   cd game-of-life 
+		'''		
             }
         }
-        stage('Git clone') {
+		stage('build') {
             steps {
-                git fetch 'https://github.com/wakaleo/game-of-life'
+                
+		sh '''
+                cd /home/ec2-user/game-of-life/
+	           mvn clean install
+                   '''
             }
         }
+        stage('Deploy') {
+            steps {
+            sh ' cp game-of-life/gameoflife-web/target/gameoflife.war  /mnt/apache-tomcat-9.0.80/webapps ' 
+			
+            }
+        }		
+
     }
 }
